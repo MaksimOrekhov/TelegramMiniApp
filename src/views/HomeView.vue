@@ -21,10 +21,9 @@ function startScanning() {
 }
 
 function onDetect(content) {
-    console.log('---', content)
-    result.value = content
+    result.value = content.rawValue
     scanning.value = false
-    window.open(content, '_blank')
+    window.open(content.rawValue)
 }
 
 function onInit(promise) {
