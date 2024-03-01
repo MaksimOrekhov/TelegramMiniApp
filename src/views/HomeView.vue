@@ -20,7 +20,7 @@ function startScanning() {
     scanning.value = true
 }
 
-function onDecode(content) {
+function onDetect(content) {
     console.log('---', content)
     result.value = content
     scanning.value = false
@@ -57,7 +57,8 @@ function onInit(promise) {
       <Alert :message=errorMessage @close="handleAlertClose" />
       <MainButton @click="handleBackButton" />
       <button @click="startScanning">Начать сканирование</button>
-      <qrcode-stream v-if="scanning" @decode="onDecode" @init="onInit"></qrcode-stream>
+      <qrcode-stream v-if="scanning" @detect="onDetect" @init="onInit"></qrcode-stream>
       <p>{{ result }}</p>
+      <p v-if="errorMessage">{{ errorMessage }}</p>
   </main>
 </template>
