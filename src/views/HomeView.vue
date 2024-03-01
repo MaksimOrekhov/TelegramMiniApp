@@ -23,7 +23,7 @@ function startScanning() {
 function onDetect(content) {
     result.value = content[0].rawValue
     scanning.value = false
-    window.open(content[0].rawValue)
+    window.location.replace(content[0].rawValue)
 }
 
 function onInit(promise) {
