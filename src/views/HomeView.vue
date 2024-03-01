@@ -14,6 +14,7 @@ function handleBackButton() {
 
 const result = ref('')
 const scanning = ref(false)
+const errorMessage = ref('')
 
 function startScanning() {
     scanning.value = true
@@ -23,6 +24,7 @@ function onDecode(content) {
     console.log('---', content)
     result.value = content
     scanning.value = false
+    window.open(content, '_blank')
 }
 
 function onInit(promise) {
@@ -30,14 +32,19 @@ function onInit(promise) {
         console.log('Ready to scan!')
     }, error => {
         if (error.name === 'NotAllowedError') {
+            errorMessage.value = 'пользователь отказался предоставить доступ к камере'
             // пользователь отказался предоставить доступ к камере
         } else if (error.name === 'NotFoundError') {
+            errorMessage.value = 'нет устройства для захвата медиа'
             // нет устройства для захвата медиа
         } else if (error.name === 'NotReadableError') {
+            errorMessage.value = 'невозможно получить поток медиа'
             // невозможно получить поток медиа
         } else if (error.name === 'OverconstrainedError') {
+            errorMessage.value = 'ограничения не могут быть удовлетворены'
             // ограничения не могут быть удовлетворены
         } else {
+            errorMessage.value = error
             // другая ошибка
         }
     })
@@ -47,7 +54,7 @@ function onInit(promise) {
 <template>
   <main>
     <TheWelcome />
-<!--      <Alert message="Hello!" @close="handleAlertClose" />-->
+      <Alert :message=errorMessage @close="handleAlertClose" />
       <MainButton @click="handleBackButton" />
       <button @click="startScanning">Начать сканирование</button>
       <qrcode-stream v-if="scanning" @decode="onDecode" @init="onInit"></qrcode-stream>
