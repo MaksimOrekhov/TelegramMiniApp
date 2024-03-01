@@ -20,6 +20,7 @@ function startScanning() {
 }
 
 function onDecode(content) {
+    console.log('---', content)
     result.value = content
     scanning.value = false
 }
