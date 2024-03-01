@@ -21,7 +21,7 @@ function startScanning() {
 }
 
 function onDetect(content) {
-    result.value = content.rawValue
+    result.value = JSON.parse(content)
     scanning.value = false
     window.open(content.rawValue)
 }
